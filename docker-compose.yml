@@ -1,0 +1,33 @@
+version: '2'
+
+services:  
+  postgres: 
+    image: postgres:9.5
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./volumes/postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASS: admin
+      POSTGRES_DB: app-sample
+
+  redis:
+    image: library/redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./volumes/redis:/var/lib/redis/data
+
+  nodejs-docker-pm2:
+    build: .
+    depends_on:
+      - redis
+      - postgres
+    links:
+      - redis:redis
+      - postgres:postgres
+    volumes:
+      - ./:/var/www/nodejs-docker-pm2
+    ports:
+      - "4000:4000"

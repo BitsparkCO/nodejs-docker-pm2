@@ -1,0 +1,13 @@
+{
+  "apps" : [{
+    "name"        : "nodejs-docker-pm2", // Nome que sera utilizado para identificar o processo da aplicação
+    "script"      : "./app/index.js", // script de execução
+    "watch"       : ["./app"], // se algum diretório sera observado, caso algum arquivo no diretório seja alterado, o processo é reiniciado
+    "env": {
+      "NODE_ENV": "development" // variáveis de ambiente para execução em development
+    },
+    "env_production" : {
+       "NODE_ENV": "production" //  variáveis de ambiente para execução em production
+    }
+  }]
+}
